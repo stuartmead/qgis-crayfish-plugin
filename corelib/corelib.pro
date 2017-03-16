@@ -90,7 +90,8 @@ SOURCES += crayfish.cpp \
     frmts/crayfish_dataset_dat.cpp \
     frmts/crayfish_dataset_xdmf.cpp \
     frmts/crayfish_dataset_xmdf.cpp \
-    frmts/crayfish_grib.cpp \
+    frmts/crayfish_dataset_titan.cpp \
+	frmts/crayfish_grib.cpp \
     frmts/crayfish_hec2d.cpp \
     frmts/crayfish_sww.cpp \
     frmts/crayfish_ugrid.cpp \

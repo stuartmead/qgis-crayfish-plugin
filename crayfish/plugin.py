@@ -241,7 +241,7 @@ class CrayfishPlugin:
         inFileName = QFileDialog.getOpenFileName(self.iface.mainWindow(),
                                                  'Open Crayfish Dat File',
                                                  self.lastFolder(),
-                                                 "Results Files DAT, SOL, XMDF, XDMF, GRIB, HEC2D, netCDF, Serafin, HEC 2D, Flo-2D (*.dat *.sol *.xmdf *.xmf *.sww *.grb *.grb2 *.bin *.grib *.grib1 *.grib2 *.hdf *.nc *.hdf *.slf *BASE.OUT *SUMMARY.OUT *TIMDEP.HDF5);;2DM Mesh Files (*.2dm)")
+                                                 "Results Files DAT, SOL, XMDF, XDMF, GRIB, HEC2D, netCDF, Serafin, HEC 2D, Flo-2D, h5 (*.dat *.sol *.xmdf *.xmf *.h5 *.sww *.grb *.grb2 *.bin *.grib *.grib1 *.grib2 *.hdf *.nc *.hdf *.slf *BASE.OUT *SUMMARY.OUT *TIMDEP.HDF5);;2DM Mesh Files (*.2dm)")
         inFileName = unicode(inFileName)
         if len(inFileName) == 0: # If the length is 0 the user pressed cancel
             return
@@ -258,7 +258,8 @@ class CrayfishPlugin:
             fileType == '.grb' or fileType == '.grb2' or fileType == '.bin' or fileType == '.grib' or fileType == '.grib1' or fileType == '.grib2' or
             fileType == '.nc' or
             fileType == '.hdf' or
-            fileType == '.slf' or
+            fileType == '.slf' or 
+            fileType == '.h5' or
             'BASE.OUT' in inFileName or
             'SUMMARY.OUT' in inFileName or
             'TIMDEP.HDF5' in inFileName):

@@ -89,6 +89,7 @@ protected:
   static Mesh* loadNetCDF(const QString& fileName, LoadStatus* status = 0);
   static Mesh* loadSerafin(const QString& fileName, LoadStatus* status = 0);
   static Mesh* loadUGRID(const QString& fileName, LoadStatus* status = 0);
+  static Mesh* loadTitan2D(const QString& fileName, LoadStatus* status = 0);
 
   static bool isFlo2DFile(const QString& fileName);
 

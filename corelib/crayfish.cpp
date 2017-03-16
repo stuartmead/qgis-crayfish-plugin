@@ -30,6 +30,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 Mesh* Crayfish::loadMesh(const QString& meshFile, LoadStatus* status)
 {
+  if (meshFile.endsWith(".h5"))
+    return loadTitan2D(meshFile, status);
+
   if (meshFile.endsWith(".sww"))
     return loadSWW(meshFile, status);
 
