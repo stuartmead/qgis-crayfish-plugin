@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 #include "crayfish_dataset.h" 
 #include "crayfish_output.h"
@@ -168,12 +169,13 @@ static Mesh* parseTitanMesh(HdfGroup gMesh)
     QVector<hsize_t> nNds = point.dims();
     QVector<float> points = point.readArray();
     
-    nodes.resize(nNds.at(1));
+    nodes.resize(nNds.at(0));
+    qDebug(QString("Resized nodes to %1").arg(nNds.at(0)).toLocal8Bit().constData());
     
-    for (int n = 0; n < nNds.at(1); ++n){
+    for (int n = 0; n < nNds.at(0); ++n){
         nodes[n].setId(n);
-        nodes[n].x = points[nNds[0]*n];
-        nodes[n].y = points[nNds[0]*n+1];        
+        nodes[n].x = points[nNds[1]*n];
+        nodes[n].y = points[nNds[1]*n+1];        
     }
 
     HdfDataset conns = openHdfDataset(gMesh, "Connections");
@@ -181,16 +183,16 @@ static Mesh* parseTitanMesh(HdfGroup gMesh)
     QVector<hsize_t> nElm = conns.dims();
     QVector<int> elem_conn = conns.readArrayInt();
 
-    elements.resize(nElm.at(1));
-
-    for (int e = 0; e < nElm.at(1); ++e)
+    elements.resize(nElm.at(0));
+    qDebug(QString("Resized elements to %1").arg(nElm.at(0)).toLocal8Bit().constData());
+    for (int e = 0; e < nElm.at(0); ++e)
     {
         elements[e].setId(e);
         elements[e].setEType(Element::E4Q);
-        QVector<uint> idx(nElm.at(0));
-        for (int fi=0; fi < nElm.at(0); ++fi)
+        QVector<uint> idx(nElm.at(1));
+        for (int fi=0; fi < nElm.at(1); ++fi)
         {
-            idx[fi] = elem_conn[nElm[0]*e + fi];
+            idx[fi] = elem_conn[nElm[1]*e + fi];
         }
 
         elements[e].setP(idx.data());
@@ -245,11 +247,15 @@ Mesh* Crayfish::loadTitan2D(const QString& fileName, LoadStatus* status)
         HdfDataset ymom = openHdfDataset(props, "YMOMENTUM");
         QVector<float> xVals = xmom.readArray();
         QVector<float> yVals = ymom.readArray();
+        qDebug(QString("Momentum maximum size is %1 x and %2 y").arg(*std::max_element(xVals.constBegin(),xVals.constEnd()))
+                                                                .arg(*std::max_element(yVals.constBegin(),yVals.constEnd()))
+                                                                .toLocal8Bit().constData());
 
         for(int i = 0; i < mesh->elements().size(); ++i)
         {
             moms->getValuesV()[i].x = xVals[i];
-            moms->getValuesV()[i].y = yVals[i];     
+            moms->getValuesV()[i].y = yVals[i];
+            moms->getValues()[i] = moms->getValuesV()[i].length();
         }
         pMom->addOutput(moms);    
 
