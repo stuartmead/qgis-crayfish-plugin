@@ -282,13 +282,9 @@ class CrayfishPlugin:
             fileType == '.grb' or fileType == '.grb2' or fileType == '.bin' or fileType == '.grib' or fileType == '.grib1' or fileType == '.grib2' or
             fileType == '.nc' or
             fileType == '.hdf' or
-<<<<<<< HEAD
             fileType == '.slf' or 
             fileType == '.h5' or
-=======
-            fileType == '.slf' or
             fileType == '.asc' or fileType == '.tif' or fileType == '.tiff' or
->>>>>>> 7126a98c621efc6cf1988e0806cae141b3e1b5ea
             'BASE.OUT' in inFileName or
             'SUMMARY.OUT' in inFileName or
             'TIMDEP.HDF5' in inFileName):
